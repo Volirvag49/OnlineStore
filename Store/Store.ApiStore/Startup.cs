@@ -74,6 +74,7 @@ namespace Store.ApiStore
 
             // ===== Add Services ========
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IProductService, ProductService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>

@@ -7,7 +7,6 @@
         {
 
             db.Database.EnsureCreated();
-
         }
     }
 }

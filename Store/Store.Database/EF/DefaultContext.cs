@@ -27,16 +27,35 @@ namespace Store.Database.EF
         {
 
             //Relations
+            builder.Entity<Customer>()
+                .HasOne(q => q.Cart)
+                .WithOne(q => q.Customer);
+
+            builder.Entity<Cart>()
+                .HasMany(q => q.CartItems)
+                .WithOne(q => q.Cart);
+
+            builder.Entity<CartItem>()
+            .HasOne(q => q.Product)
+            .WithMany(q => q.CartItems)
+            .HasForeignKey(q => q.ProductId);
+
 
             //Unique Indexes
 
             //QueryFilters
             builder.Entity<Customer>().HasQueryFilter(x => !x.IsDeleted);
+            builder.Entity<Product>().HasQueryFilter(x => !x.IsDeleted);
+            builder.Entity<Cart>().HasQueryFilter(x => !x.IsDeleted);
+            builder.Entity<CartItem>().HasQueryFilter(x => !x.IsDeleted);
             //PropertySettings
 
         }
 
         //Entities
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }
