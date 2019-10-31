@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Store.ApiStore.VewModels.Customer;
+using Store.ApiStore.VewModels.Product;
 using Store.Database.Entities;
 
 namespace Store.ApiStore.Infrastructure.Automapper
@@ -12,6 +13,11 @@ namespace Store.ApiStore.Infrastructure.Automapper
             CreateMap<Customer, CustomerGetModel>();
             CreateMap<CustomerPostModel, Customer>();
             CreateMap<CustomerPutModel, Customer>();
+
+            // Product
+            CreateMap<Product, ProductGetModel>();
+            CreateMap<ProductPostModel, Product>();
+            CreateMap<ProductPutModel, Product>();
         }
     }
 }
