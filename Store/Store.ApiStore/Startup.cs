@@ -16,6 +16,9 @@ using Store.ApiStore.Services.Base;
 using Store.Database.EF;
 using Store.Database.Repositories;
 using Store.Database.Repositories.Base;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
+using System;
+using System.IO;
 
 namespace Store.ApiStore
 {
@@ -41,14 +44,18 @@ namespace Store.ApiStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddDbContext<DefaultContext>(options =>
                options//.UseLoggerFactory(_loggerFactory)
                 .UseSqlServer(
-                        @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\Source\Store\Store\Store.Database\Database\Store.mdf;Integrated Security=True"));
+                        @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=Store.mdf;Integrated Security=True"));
 
 
             services.AddControllers();
+
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
+            });
 
             services.AddScoped(a =>
             {
@@ -112,6 +119,20 @@ namespace Store.ApiStore
             {
                 DbInitializer.Initialize(context);
             }
+
+            app.UseSpa(spa =>
+            {
+                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                // see https://go.microsoft.com/fwlink/?linkid=864501
+
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    //spa.UseAngularCliServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                }
+            });
         }
     }
 }
