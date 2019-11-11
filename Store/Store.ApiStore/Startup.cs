@@ -47,7 +47,7 @@ namespace Store.ApiStore
             services.AddDbContext<DefaultContext>(options =>
                options//.UseLoggerFactory(_loggerFactory)
                 .UseSqlServer(
-                        @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=Store.mdf;Integrated Security=True"));
+                        @"Data Source=(LocalDB)\MSSQLLocalDB;Database=Store;Integrated Security=True"));
 
 
             services.AddControllers();
