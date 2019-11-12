@@ -12,7 +12,7 @@ namespace Store.Database.Entities
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
 
-        public Guid CartId { get; set; }
+        public Guid? CartId { get; set; }
         public Cart Cart { get; set; }
     }
 }
