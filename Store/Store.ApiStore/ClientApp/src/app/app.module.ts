@@ -4,13 +4,22 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { HomeModule } from './home/home.module';
+import {
+    FooterComponent,
+    HeaderComponent,
+    SharedModule
+} from './shared';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent, HeaderComponent, FooterComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+      AppRoutingModule,
+      HomeModule,
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
