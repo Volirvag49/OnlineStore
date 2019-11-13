@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { HomeModule } from './home/home.module';
 import {
@@ -18,6 +19,7 @@ import {
   imports: [
     BrowserModule,
       AppRoutingModule,
+      NgbModule,
       HomeModule,
     SharedModule,
   ],
