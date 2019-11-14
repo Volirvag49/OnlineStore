@@ -18,9 +18,9 @@ import {
   ],
   imports: [
     BrowserModule,
-      AppRoutingModule,
-      NgbModule,
-      HomeModule,
+    AppRoutingModule,
+    NgbModule,
+    HomeModule,
     SharedModule,
   ],
   providers: [],

@@ -12,6 +12,11 @@ export class ProductService {
         private apiService: ApiService
     ) { }
 
+    getAll(): Observable<Product> {
+        return this.apiService.get('/employee/')
+            .pipe(map(data => data.product));
+    }
+
     get(id): Observable<Product> {
         return this.apiService.get('/employee/' + id)
             .pipe(map(data => data.product));
