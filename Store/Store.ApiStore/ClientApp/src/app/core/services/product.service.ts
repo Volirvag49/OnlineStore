@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { ApiService } from './api.service';
@@ -12,29 +11,29 @@ export class ProductService {
         private apiService: ApiService
     ) { }
 
-    getAll(): Observable<Product> {
-        return this.apiService.get('/employee/')
-            .pipe(map(data => data.product));
+    getAll(): Observable<Product[]> {
+        return this.apiService.get('/Product/')
+            .pipe(map(data => data.products));
     }
 
     get(id): Observable<Product> {
-        return this.apiService.get('/employee/' + id)
+        return this.apiService.get('/product/' + id)
             .pipe(map(data => data.product));
     }
 
     delete(id) {
-        return this.apiService.delete('/employee/' + id);
+        return this.apiService.delete('/product/' + id);
     }
 
     save(product): Observable<Product> {
         // If we're updating an existing item
         if (product.id) {
-            return this.apiService.put('/employee/' + product.id, { product: product })
+            return this.apiService.put('/product/' + product.id, { product: product })
                 .pipe(map(data => data.product));
 
             // Otherwise, create a new item
         } else {
-            return this.apiService.post('/employee/', { product: product })
+            return this.apiService.post('/product/', { product: product })
                 .pipe(map(data => data.product));
         }
     }

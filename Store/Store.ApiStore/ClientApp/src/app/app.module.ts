@@ -11,6 +11,7 @@ import {
     HeaderComponent,
     SharedModule
 } from './shared';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {
     NgbModule,
     HomeModule,
     SharedModule,
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

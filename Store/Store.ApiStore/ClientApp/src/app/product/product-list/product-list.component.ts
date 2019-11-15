@@ -1,14 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 
+import { concatMap, tap } from 'rxjs/operators';
+
+import {
+    Product, ProductService
+} from '../../core';
+
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html'
 })
 export class ProductListComponent implements OnInit {
 
-  constructor() { }
+    products: Array<Product>;
 
-  ngOnInit() {
+    constructor(private productService: ProductService) { }
+
+    ngOnInit() {
+        this.getAll();
   }
-
+    getAll() {
+        this.productService.getAll()
+            .subscribe(products => this.products = products);
+    }
 }
