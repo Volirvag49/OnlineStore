@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { concatMap, tap } from 'rxjs/operators';
 
 import {
@@ -10,15 +9,17 @@ import {
   selector: 'app-product-list',
   templateUrl: './product-list.component.html'
 })
+
 export class ProductListComponent implements OnInit {
 
-    products: Array<Product>;
+    products: Product[];
 
     constructor(private productService: ProductService) { }
 
     ngOnInit() {
         this.getAll();
-  }
+    }
+
     getAll() {
         this.productService.getAll()
             .subscribe(products => this.products = products);
