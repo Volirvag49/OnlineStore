@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { concatMap, tap } from 'rxjs/operators';
+import { Router } from "@angular/router";
 
 import {
     Product, ProductService
@@ -14,7 +15,8 @@ export class ProductListComponent implements OnInit {
 
     products: Product[];
 
-    constructor(private productService: ProductService) { }
+    constructor(private router: Router,
+        private productService: ProductService) { }
 
     ngOnInit() {
         this.getAll();
@@ -24,4 +26,8 @@ export class ProductListComponent implements OnInit {
         this.productService.getAll()
             .subscribe(products => this.products = products);
     }
+
+    addNew(): void {
+        this.router.navigate(['product/add']);
+    };
 }

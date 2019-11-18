@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared';
 import { ProductRoutingModule } from './product-routing.module';
 import { ProductListComponent } from './product-list/product-list.component';
+import { ProductAddComponent } from './product-add/product-add.component';
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import { ProductListComponent } from './product-list/product-list.component';
         SharedModule
     ],
     declarations: [
-        ProductListComponent
+        ProductListComponent,
+        ProductAddComponent
     ],
     providers: [
     ]
