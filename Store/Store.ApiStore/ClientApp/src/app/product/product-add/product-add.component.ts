@@ -37,7 +37,6 @@ export class ProductAddComponent implements OnInit {
     }
 
     onSubmit() {
-
         this.productService.create(this.addForm.value)
             .subscribe(data => {
                 this.router.navigate(['product']);
