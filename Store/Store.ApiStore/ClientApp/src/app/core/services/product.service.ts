@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ApiService } from './api.service';
-import { ProductModel, ProductPostModel } from '../models';
+import { ProductGetModel, ProductPostModel, ProductPutModel } from '../models';
 import { map } from 'rxjs/operators';
 
 @Injectable()
@@ -11,12 +11,12 @@ export class ProductService {
         private apiService: ApiService
     ) { }
 
-    getAll(): Observable<ProductModel[]> {
+    getAll(): Observable<ProductGetModel[]> {
         return this.apiService.get('/Product/')
             .pipe(map(data => data));
     }
 
-    get(id: string): Observable<ProductModel> {
+    get(id: string): Observable<ProductGetModel> {
         return this.apiService.get('/product/' + id)
             .pipe(map(data => data));
     }
@@ -28,10 +28,10 @@ export class ProductService {
             .pipe(map(data => data));
     }
 
-    update(product: ProductModel): Observable<ProductModel> {
+    update(product: ProductPutModel): Observable<ProductPutModel> {
         // updating an existing item
         if (product.id) {
-            return this.apiService.put('/product/' + product.id, product)
+            return this.apiService.put('/product/', product)
                 .pipe(map(data => data));
         }
     }

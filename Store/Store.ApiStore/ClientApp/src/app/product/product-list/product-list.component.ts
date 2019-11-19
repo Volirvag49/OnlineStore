@@ -3,7 +3,7 @@ import { concatMap, tap } from 'rxjs/operators';
 import { Router } from "@angular/router";
 
 import {
-    Product, ProductService
+    ProductGetModel, ProductService
 } from '../../core';
 
 @Component({
@@ -13,7 +13,7 @@ import {
 
 export class ProductListComponent implements OnInit {
 
-    products: Product[];
+    products: ProductGetModel[];
 
     constructor(private router: Router,
         private productService: ProductService) { }
@@ -29,5 +29,10 @@ export class ProductListComponent implements OnInit {
 
     addNew(): void {
         this.router.navigate(['product/add']);
+    };
+
+    update(productId: string): void {
+        console.log(productId);
+        this.router.navigate(['product/' +productId +'/edit']);
     };
 }
