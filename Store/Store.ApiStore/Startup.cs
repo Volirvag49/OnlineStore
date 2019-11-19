@@ -105,6 +105,7 @@ namespace Store.ApiStore
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Store");
                 c.RoutePrefix = string.Empty;
             });
+
             app.UseCors(options =>
                 options.WithOrigins("http://localhost:4200")
                 .AllowAnyMethod()

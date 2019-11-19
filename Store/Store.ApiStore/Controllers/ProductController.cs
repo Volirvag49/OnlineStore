@@ -52,9 +52,8 @@ namespace Store.ApiStore.Controllers
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(ProductPostModel))]
         [ProducesResponseType(400, Type = typeof(string))]
-        public async Task<ActionResult<ProductGetModel>> Create([FromBody] ProductPostModel model)
+        public async Task<ActionResult<Guid>> Create([FromBody] ProductPostModel model)
         {
- 
             var newGuid = await _productService.Create(model);
 
             return StatusCode((int)HttpStatusCode.Created, newGuid);

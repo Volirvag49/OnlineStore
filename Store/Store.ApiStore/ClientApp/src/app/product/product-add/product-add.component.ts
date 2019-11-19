@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 
 import {
-    Product, ProductService
+    ProductPostModel, ProductService
 } from '../../core';
 
 @Component({
@@ -16,20 +16,29 @@ export class ProductAddComponent implements OnInit {
         private router: Router, 
         private productService: ProductService) { }
 
+    newProduct: ProductPostModel;
+
     addForm: FormGroup;
 
     ngOnInit() {
+        this.newProduct = {
+            name: null,
+            description: null,
+            photoUrl: null,
+            price: null
+        }
+
         this.addForm = this.formBuilder.group({
-            id: null,
-            name: ['', Validators.required],
-            description: ['', Validators.required],
-            photoUrl: ['', Validators.required],
-            price: ['', Validators.required]
+            name: [this.newProduct.name, Validators.required],
+            description: [this.newProduct.description, Validators.required],
+            photoUrl: [this.newProduct.photoUrl, Validators.required],
+            price: [this.newProduct.price, Validators.required]
         });
     }
 
     onSubmit() {
-        this.productService.save(this.addForm.value)
+
+        this.productService.create(this.addForm.value)
             .subscribe(data => {
                 this.router.navigate(['product']);
             });
