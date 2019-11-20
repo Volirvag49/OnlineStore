@@ -33,7 +33,7 @@ export class ProductListComponent implements OnInit {
 
     update(productId: string): void {
         console.log(productId);
-        this.router.navigate(['product/' +productId +'/edit']);
+        this.router.navigate(['product/' + productId +'/edit']);
     };
 
     delete(productId: string): void {

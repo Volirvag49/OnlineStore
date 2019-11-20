@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 
 import {
     ProductPutModel, ProductService
@@ -14,15 +14,18 @@ import { first } from 'rxjs/operators';
 export class ProductEditComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder,
+        private activatedRoute: ActivatedRoute,
         private router: Router,
         private productService: ProductService) { }
 
     product: ProductPutModel;
 
+    action: string;
+
     editForm: FormGroup;
 
     ngOnInit() {
-        let productId = window.localStorage.getItem("id");
+        let productId = this.activatedRoute.snapshot.paramMap.get('id');
         if (!productId) {
             alert("Invalid action.")
             this.router.navigate(['product']);
