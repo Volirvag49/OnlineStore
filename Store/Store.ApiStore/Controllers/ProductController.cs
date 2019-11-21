@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Store.ApiStore.Services.Base;
+using Store.ApiStore.VewModels;
 using Store.ApiStore.VewModels.Product;
 
 namespace Store.ApiStore.Controllers
@@ -16,6 +17,17 @@ namespace Store.ApiStore.Controllers
         public ProductController(IProductService productService)
         {
             _productService = productService;
+        }
+
+
+        [HttpPost("fs")]
+        [ProducesResponseType(200, Type = typeof(ProductGetModel[]))]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400, Type = typeof(string))]
+        public async Task<ActionResult<ProductGetModel[]>> GetWithFilterAndSotring([FromBody] SortSearchModel sortSearchModel)
+        {
+
+            return await _productService.GetWithFilterAndSotring(sortSearchModel);
         }
 
         [HttpGet()]
