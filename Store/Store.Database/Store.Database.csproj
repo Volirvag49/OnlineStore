@@ -10,8 +10,4 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Store.Extensions\Store.Extensions.csproj" />
-  </ItemGroup>
-
 </Project>

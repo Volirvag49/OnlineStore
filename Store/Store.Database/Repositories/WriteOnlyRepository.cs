@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 //using Serilog;
 using Store.Database.Entities.Base;
+using Store.Database.Extensions;
 using Store.Database.Repositories.Base;
-using Store.Extensions;
 
 namespace Store.Database.Repositories
 {
