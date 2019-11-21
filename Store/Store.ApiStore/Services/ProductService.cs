@@ -55,7 +55,7 @@ namespace Store.ApiStore.Services
 
         }
 
-        public async Task<Object> GetWithFilterAndSotring(SortSearchModel  sortSearchModel)
+        public async Task<PagedViewModel<ProductGetModel>> GetWithFilterAndSotring(SortSearchModel  sortSearchModel)
         {
             Expression<Func<Product, bool>> filter = null;
 
@@ -104,7 +104,7 @@ namespace Store.ApiStore.Services
                 page: sortSearchModel.Page, pageSize: sortSearchModel.pageSize,
                 filter: filter, orderBy: orderBy);
 
-            return result;
+            return _mapper.Map<PagedViewModel<ProductGetModel>>(result);
         }
 
         public async Task<Guid> Create(ProductPostModel postModel)

@@ -24,7 +24,7 @@ namespace Store.ApiStore.Controllers
         //[ProducesResponseType(200, Type = typeof(ProductGetModel[]))]
         [ProducesResponseType(404)]
         [ProducesResponseType(400, Type = typeof(string))]
-        public async Task<ActionResult<Object>> GetWithFilterAndSotring([FromBody] SortSearchModel sortSearchModel)
+        public async Task<ActionResult<PagedViewModel<ProductGetModel>>> GetWithFilterAndSotring([FromBody] SortSearchModel sortSearchModel)
         {
 
             return await _productService.GetWithFilterAndSotring(sortSearchModel);

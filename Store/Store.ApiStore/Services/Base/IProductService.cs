@@ -12,7 +12,7 @@ namespace Store.ApiStore.Services.Base
 
         Task<ProductGetModel[]> GetAllRemoved();
 
-        Task<Object> GetWithFilterAndSotring(SortSearchModel sortSearchModel);
+        Task<PagedViewModel<ProductGetModel>> GetWithFilterAndSotring(SortSearchModel sortSearchModel);
 
         Task<Guid> Create(ProductPostModel pustModel);
         Task Update(ProductPutModel putModel);
