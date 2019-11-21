@@ -67,7 +67,7 @@ namespace Store.ApiStore.Services
                         filter = q => q.Description.ToLower().Contains(sortSearchModel.SearchString.ToLower());
                         break;
                     case nameof(Product.Price):
-                        filter = q => q.Price.ToString().Equals(sortSearchModel.SearchString);
+                        filter = q => q.Price.ToString().Contains(sortSearchModel.SearchString);
                         break;
                     default:
                         filter = q => q.Name.ToLower().Contains(sortSearchModel.SearchString.ToLower());
