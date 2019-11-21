@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Store.Database.Entities.Base;
+using Store.Database.Extensions;
 using Store.Database.Repositories.Base;
 
 namespace Store.Database.Repositories
@@ -35,6 +36,22 @@ namespace Store.Database.Repositories
                 return null;
 
             return entity;
+        }
+
+        public async Task<PagedResult<TEntity>> GetPagedAsync<TEntity>(
+            int page, int pageSize,
+            Expression<Func<TEntity, bool>> filter = null,
+            bool? isDeleted = null,
+            bool isIgnoreQueryFilter = false,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            string includeProperties = null,
+            Func<IQueryable<TEntity>, IQueryable<TEntity>> queryableFilter = null)
+            where TEntity : class, IEntity
+        {
+            IQueryable<TEntity> query = GetQueryable(filter, isDeleted, isIgnoreQueryFilter, orderBy,
+                includeProperties, queryableFilter: queryableFilter);
+
+            return await query.GetPagedAsync(page, pageSize, _cancellationToken);
         }
 
         public async Task<TEntity[]> GetAllAsync<TEntity>(

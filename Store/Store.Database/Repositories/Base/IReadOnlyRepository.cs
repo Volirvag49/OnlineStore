@@ -8,6 +8,17 @@ namespace Store.Database.Repositories.Base
 {
     public interface IReadOnlyRepository
     {
+
+        Task<PagedResult<TEntity>> GetPagedAsync<TEntity>(
+            int page, int pageSize,
+            Expression<Func<TEntity, bool>> filter = null,
+            bool? isDeleted = null,
+            bool isIgnoreQueryFilter = false,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            string includeProperties = null,
+            Func<IQueryable<TEntity>, IQueryable<TEntity>> queryableFilter = null)
+            where TEntity : class, IEntity;
+
         Task<TEntity> GetFirstAsync<TEntity>(
             Expression<Func<TEntity, bool>> filter = null,
             bool? isDeleted = null,

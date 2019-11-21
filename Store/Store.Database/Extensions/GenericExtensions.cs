@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Store.Database.Entities.Base;
 
 namespace Store.Database.Extensions
@@ -50,8 +52,9 @@ namespace Store.Database.Extensions
             return false;
         }
 
-        public static PagedResult<T> GetPaged<T>(this IQueryable<T> query,
-            int page, int pageSize) where T : IEntity
+
+        public async static Task<PagedResult<T>> GetPagedAsync<T>(this IQueryable<T> query,
+            int page, int pageSize, CancellationToken cancellationToken) where T : IEntity
         {
             var result = new PagedResult<T>();
             result.CurrentPage = page;
@@ -62,7 +65,8 @@ namespace Store.Database.Extensions
             result.PageCount = (int)Math.Ceiling(pageCount);
 
             var skip = (page - 1) * pageSize;
-            result.Results = query.Skip(skip).Take(pageSize).ToList();
+            result.Results = await query.Skip(skip).Take(pageSize)
+                .ToArrayAsync(cancellationToken);
 
             return result;
         }

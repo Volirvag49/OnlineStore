@@ -12,5 +12,9 @@ namespace Store.ApiStore.VewModels
 
         public string SortOrder { get; set; }
         public bool ByDescending { get; set; }
+
+        public int Page { get; set; }
+        public int pageSize { get; set; }
+
     }
 }

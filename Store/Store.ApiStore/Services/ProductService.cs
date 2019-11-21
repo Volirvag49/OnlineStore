@@ -55,7 +55,7 @@ namespace Store.ApiStore.Services
 
         }
 
-        public async Task<ProductGetModel[]> GetWithFilterAndSotring(SortSearchModel  sortSearchModel)
+        public async Task<Object> GetWithFilterAndSotring(SortSearchModel  sortSearchModel)
         {
             Expression<Func<Product, bool>> filter = null;
 
@@ -99,8 +99,12 @@ namespace Store.ApiStore.Services
                     break;
             }
 
-            var result = await _readOnly.GetQueryable<Product>(filter: filter, orderBy: orderBy).ToArrayAsync();
-            return _mapper.Map<ProductGetModel[]>(result);
+
+            var result = await _readOnly.GetPagedAsync(
+                page: sortSearchModel.Page, pageSize: sortSearchModel.pageSize,
+                filter: filter, orderBy: orderBy);
+
+            return result;
         }
 
         public async Task<Guid> Create(ProductPostModel postModel)
