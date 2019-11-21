@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Store.ApiStore.Infrastructure.Exceptions;
 using Store.ApiStore.Services.Base;
+using Store.ApiStore.VewModels;
 using Store.ApiStore.VewModels.Product;
 using Store.Database.Entities;
 using Store.Database.Repositories.Base;
@@ -49,6 +51,55 @@ namespace Store.ApiStore.Services
         {
             var result = await _readOnly.GetAllAsync<Product>(
                 isDeleted: true, isIgnoreQueryFilter: true);
+            return _mapper.Map<ProductGetModel[]>(result);
+
+        }
+
+        public async Task<ProductGetModel[]> GetWithFilterAndSotring(SortSearchModel  sortSearchModel)
+        {
+            Expression<Func<Product, bool>> filter = null;
+
+            if (!String.IsNullOrEmpty(sortSearchModel.SearchString))
+            {
+                switch (sortSearchModel.SearchSelection)
+                {
+                    case nameof(Product.Description):
+                        filter = q => q.Description.ToLower().Contains(sortSearchModel.SearchString.ToLower());
+                        break;
+                    case nameof(Product.Price):
+                        filter = q => q.Price.ToString().Equals(sortSearchModel.SearchString);
+                        break;
+                    default:
+                        filter = q => q.Name.ToLower().Contains(sortSearchModel.SearchString.ToLower());
+                        break;
+                }               
+            }
+
+            Func<IQueryable<Product>, IOrderedQueryable<Product>> orderBy;
+
+            switch (sortSearchModel.SortOrder)
+            {
+                case nameof(Product.Description):
+                    if (sortSearchModel.ByDescending)
+                        orderBy = q => q.OrderByDescending(s => s.Description);
+                    else
+                        orderBy = q => q.OrderBy(s => s.Description);
+                    break;
+                case nameof(Product.Price):
+                    if (sortSearchModel.ByDescending)
+                        orderBy = q => q.OrderByDescending(s => s.Price);
+                    else
+                        orderBy = q => q.OrderBy(s => s.Price);
+                    break;
+                default:
+                    if (sortSearchModel.ByDescending)
+                        orderBy = q => q.OrderByDescending(s => s.Name);
+                    else
+                        orderBy = q => q.OrderBy(s => s.Name);
+                    break;
+            }
+
+            var result = await _readOnly.GetQueryable<Product>(filter: filter, orderBy: orderBy).ToArrayAsync();
             return _mapper.Map<ProductGetModel[]>(result);
         }
 

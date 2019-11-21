@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Store.ApiStore.VewModels;
 using Store.ApiStore.VewModels.Product;
 
 namespace Store.ApiStore.Services.Base
@@ -10,6 +11,8 @@ namespace Store.ApiStore.Services.Base
         Task<ProductGetModel[]> GetByAll();
 
         Task<ProductGetModel[]> GetAllRemoved();
+
+        Task<ProductGetModel[]> GetWithFilterAndSotring(SortSearchModel sortSearchModel);
 
         Task<Guid> Create(ProductPostModel pustModel);
         Task Update(ProductPutModel putModel);
