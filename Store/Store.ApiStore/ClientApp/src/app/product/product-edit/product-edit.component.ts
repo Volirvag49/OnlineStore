@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common'
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 
@@ -16,6 +17,7 @@ export class ProductEditComponent implements OnInit {
     constructor(private formBuilder: FormBuilder,
         private activatedRoute: ActivatedRoute,
         private router: Router,
+        private location: Location,
         private productService: ProductService) { }
 
     product: ProductPutModel;
@@ -64,5 +66,9 @@ export class ProductEditComponent implements OnInit {
                 error => {
                     alert(error);
                 });
+    }
+
+    goBack() {
+        this.location.back();
     }
 }

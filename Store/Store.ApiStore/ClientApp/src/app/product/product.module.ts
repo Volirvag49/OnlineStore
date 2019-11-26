@@ -4,12 +4,15 @@ import { ProductRoutingModule } from './product-routing.module';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductAddComponent } from './product-add/product-add.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 
 @NgModule({
     imports: [
         ProductRoutingModule,
-        SharedModule
+        SharedModule,
+        NgbModule
     ],
     declarations: [
         ProductListComponent,

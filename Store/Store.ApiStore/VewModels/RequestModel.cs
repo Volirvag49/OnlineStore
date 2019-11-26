@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Store.ApiStore.VewModels
 {
-    public class SortSearchModel
+    public class RequestModel
     {
         public string SearchString { get; set; }
         public string SearchSelection { get; set; }
@@ -13,8 +13,8 @@ namespace Store.ApiStore.VewModels
         public string SortOrder { get; set; }
         public bool ByDescending { get; set; }
 
-        public int Page { get; set; }
-        public int pageSize { get; set; }
+        public int CurrentPage { get; set; }
+        public int PageSize { get; set; }
 
     }
 }

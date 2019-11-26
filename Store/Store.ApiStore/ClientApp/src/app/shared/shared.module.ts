@@ -3,9 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
 import { ListErrorsComponent } from './list-errors.component';
-
+import { NgbdSortableHeader } from './directives';
 
 @NgModule({
     imports: [
@@ -17,6 +16,7 @@ import { ListErrorsComponent } from './list-errors.component';
     ],
     declarations: [
         ListErrorsComponent,
+        NgbdSortableHeader
 
     ],
     exports: [
@@ -26,6 +26,7 @@ import { ListErrorsComponent } from './list-errors.component';
         HttpClientModule,
         RouterModule,
         ListErrorsComponent,
+        NgbdSortableHeader
 
     ]
 })

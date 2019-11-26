@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ApiService } from './api.service';
-import { ProductGetModel, ProductPostModel, ProductPutModel } from '../models';
+import { ProductGetModel, ProductPostModel, ProductPutModel, RequesthModel, ResponceModel } from '../models';
 import { map } from 'rxjs/operators';
 
 @Injectable()
@@ -18,6 +18,11 @@ export class ProductService {
 
     get(id: string): Observable<ProductGetModel> {
         return this.apiService.get('/product/' + id)
+            .pipe(map(data => data));
+    }
+
+    getPaged(request: RequesthModel): Observable<ResponceModel<ProductGetModel>> {
+        return this.apiService.post('/product/search', request)
             .pipe(map(data => data));
     }
 

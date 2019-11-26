@@ -20,14 +20,14 @@ namespace Store.ApiStore.Controllers
         }
 
 
-        [HttpPost("fs")]
-        //[ProducesResponseType(200, Type = typeof(ProductGetModel[]))]
+        [HttpPost("search")]
+        [ProducesResponseType(200, Type = typeof(ResponceModel<ProductGetModel>))]
         [ProducesResponseType(404)]
         [ProducesResponseType(400, Type = typeof(string))]
-        public async Task<ActionResult<PagedViewModel<ProductGetModel>>> GetWithFilterAndSotring([FromBody] SortSearchModel sortSearchModel)
+        public async Task<ActionResult<ResponceModel<ProductGetModel>>> Search([FromBody] RequestModel sortSearchModel)
         {
 
-            return await _productService.GetWithFilterAndSotring(sortSearchModel);
+            return await _productService.Search(sortSearchModel);
         }
 
         [HttpGet()]

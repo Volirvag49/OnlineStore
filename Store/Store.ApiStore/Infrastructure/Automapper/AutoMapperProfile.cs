@@ -12,7 +12,7 @@ namespace Store.ApiStore.Infrastructure.Automapper
         public AutoMapperProfile()
         {
             // pagination
-            CreateMap<PagedResult<Product>, PagedViewModel<ProductGetModel>>()
+            CreateMap<PagedResult<Product>, ResponceModel<ProductGetModel>>()
                 .ForMember(x => x.Results,
                 x => x.MapFrom(m => m.Results));
 

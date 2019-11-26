@@ -1,24 +1,48 @@
 <h2>Products</h2>
 <br />
-<button class="btn btn-danger" style="width:100px" (click)="addNew()"> Add</button>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Price</th>
-      <th>Description</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of products">
-      <td>{{item.name}}</td>
-      <td>{{item.price}}</td>
-      <td>{{item.description}}</td>
-      <td>
-        <button class="btn btn-success" (click)="update(item.id)" style="margin-left: 20px;"> Update</button>
-        <button class="btn btn-success" (click)="delete(item.id)"> Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<button class="btn btn-primary" style="width:100px" (click)="addNew()"> Add</button>
+<br /><br /><br />
+<form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+  <div class="form-group form-inline">
+    <label for="Name">Name:</label>
+    <input class="form-control" type="text" formControlName="searchString" placeholder="request" name="searchString" id="searchString">
+    <select class="custom-select" style="width: auto" formControlName="searchSelection" name="searchSelection" id="searchSelection">
+      <option value="Name">Name</option>
+      <option value="Price">Price</option>
+      <option value="Description">Description</option>
+    </select>
+    <button class="btn btn-primary">Search</button>
+  </div>
+</form>
+<ng-container *ngIf="responceModel">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col" sortable="Name" (sort)="onSort($event)">Name</th>
+        <th scope="col" sortable="Price" (sort)="onSort($event)">Price</th>
+        <th scope="col" sortable="Description" (sort)="onSort($event)">Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of responceModel?.results">
+        <td>{{item.name}}</td>
+        <td>{{item.price}}</td>
+        <td>{{item.description}}</td>
+        <td style="width: 180px;">
+          <button class="btn btn-primary" (click)="update(item.id)"> Update</button>
+          <button class="btn btn-primary" (click)="delete(item.id)"> Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination [collectionSize]="responceModel.rowCount" [page]="responceModel.page>0? responceModel.page : 1" [pageSize]="responceModel.pageSize" (pageChange)="changePage($event)">
+    </ngb-pagination>
+    <select class="custom-select" style="width: auto" name="pageSize" [ngModel]="responceModel.pageSize" (change)="changePageSize($event.target.value)">
+      <option value=3>3 items per page</option>
+      <option value=5>5 items per page</option>
+      <option value=10>10 items per page</option>
+    </select>
+  </div>
+</ng-container>

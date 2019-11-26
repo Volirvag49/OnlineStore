@@ -1,27 +1,23 @@
 <div class="col-md-6 user-container">
   <h2 class="text-center">Add Product</h2>
   <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
-
     <div class="form-group">
       <label for="Name">Name:</label>
       <input type="text" formControlName="name" placeholder="name" name="name" class="form-control" id="name">
     </div>
-
     <div class="form-group">
       <label for="description">Description:</label>
       <input formControlName="description" placeholder="description" name="description" class="form-control" id="description">
     </div>
-
     <div class="form-group">
       <label for="photoUrl">Photo:</label>
       <input formControlName="photoUrl" placeholder="photoUrl" name="photoUrl" class="form-control" id="photoUrl">
     </div>
-
     <div class="form-group">
       <label for="lastName">Price:</label>
       <input formControlName="price" placeholder="price" name="price" type="number" class="form-control" id="price">
     </div>
-
-    <button class="btn btn-success">Add</button>
+    <button class="btn btn-primary">Add</button>
   </form>
+  <button class="btn btn-secondary" (click)="goBack()">go back</button>
 </div>

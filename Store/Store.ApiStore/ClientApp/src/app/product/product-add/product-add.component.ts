@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common'
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 
@@ -13,7 +14,8 @@ import {
 export class ProductAddComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder,
-        private router: Router, 
+        private router: Router,
+        private location: Location,
         private productService: ProductService) { }
 
     newProduct: ProductPostModel;
@@ -41,6 +43,10 @@ export class ProductAddComponent implements OnInit {
             .subscribe(data => {
                 this.router.navigate(['product']);
             });
+    }
+
+    goBack() {
+        this.location.back();
     }
 
 }
