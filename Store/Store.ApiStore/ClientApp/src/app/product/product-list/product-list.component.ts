@@ -18,7 +18,6 @@ import {
 
 export class ProductListComponent implements OnInit {
 
-    products: ProductGetModel[];
     requestModel: RequesthModel;
     responceModel: ResponceModel<ProductGetModel>;
 
@@ -72,11 +71,6 @@ export class ProductListComponent implements OnInit {
         this.getPaged();
     }
 
-    getAll() {
-        this.productService.getAll()
-            .subscribe(products => this.products = products);
-    }
-
     getPaged() {
         this.productService.getPaged(this.requestModel)
             .subscribe(data => {
@@ -112,7 +106,7 @@ export class ProductListComponent implements OnInit {
 
         this.productService.delete(productId)
             .subscribe(data => {
-                this.products = this.products.filter(u => u.id !== productId);
+                this.getPaged();
             })
     };
 }
