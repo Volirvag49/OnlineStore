@@ -1,12 +1,10 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common'
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router, ActivatedRoute } from "@angular/router";
-
-import {
-    ProductPutModel, ProductService
-} from '../../core';
+import { ActivatedRoute, Router } from "@angular/router";
 import { first } from 'rxjs/operators';
+import { ProductPutModel, ProductService } from '../../core';
+
 
 @Component({
   selector: 'app-product-edit',

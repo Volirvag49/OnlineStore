@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { ListErrorsComponent } from './list-errors.component';
 import { NgbdSortableHeader } from './directives';
+import { ListErrorsComponent } from './list-errors.component';
 
 @NgModule({
     imports: [
