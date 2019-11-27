@@ -49,7 +49,6 @@ export class ProductListComponent implements OnInit {
     }
 
     onSearch() {
-        console.log('search:' + this.searchForm.value.request);
         this.requestModel.searchString = this.searchForm.value.searchString;
         this.requestModel.searchSelection = this.searchForm.value.searchSelection;
         this.getPaged();
@@ -92,6 +91,7 @@ export class ProductListComponent implements OnInit {
 
     changePageSize(size: number) {
         this.requestModel.pageSize = +size;
+        this.requestModel.currentPage = 1;
         this.getPaged();
     }
 

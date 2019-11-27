@@ -37,7 +37,7 @@
     </tbody>
   </table>
   <div class="d-flex justify-content-between p-2">
-    <ngb-pagination [collectionSize]="responceModel.rowCount" [page]="responceModel.page>0? responceModel.page : 1" [pageSize]="responceModel.pageSize" (pageChange)="changePage($event)">
+    <ngb-pagination [collectionSize]="responceModel.rowCount" [(page)]="requestModel.currentPage" [(pageSize)]="requestModel.pageSize" (pageChange)="changePage($event)">
     </ngb-pagination>
     <select class="custom-select" style="width: auto" name="pageSize" [ngModel]="responceModel.pageSize" (change)="changePageSize($event.target.value)">
       <option value=3>3 items per page</option>
