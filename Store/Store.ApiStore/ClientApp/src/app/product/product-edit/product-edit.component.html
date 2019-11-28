@@ -1,5 +1,6 @@
 <div class="col-md-6 user-container">
   <h2 class="text-center">Update Product</h2>
+  <app-error-message [errors]="errorMessage"></app-error-message>
   <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="Name">Name:</label>

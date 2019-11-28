@@ -20,7 +20,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                         console.log(error.error.error);
                         console.log('_________________________________________________________________')
                     }
-                    window.alert(errorMessage);
                     return throwError(errorMessage);
                 })
             )

@@ -12,17 +12,15 @@ import { ProductPutModel, ProductService } from '../../core';
 })
 export class ProductEditComponent implements OnInit {
 
+    product: ProductPutModel;
+    errorMessage: string;
+    editForm: FormGroup;
+
     constructor(private formBuilder: FormBuilder,
         private activatedRoute: ActivatedRoute,
         private router: Router,
         private location: Location,
         private productService: ProductService) { }
-
-    product: ProductPutModel;
-
-    action: string;
-
-    editForm: FormGroup;
 
     ngOnInit() {
         let productId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -31,7 +29,6 @@ export class ProductEditComponent implements OnInit {
             this.router.navigate(['product']);
             return;
         }
-
         this.product = {
             id: null,
             name: null,
@@ -39,7 +36,6 @@ export class ProductEditComponent implements OnInit {
             photoUrl: null,
             price: null
         }
-
         this.editForm = this.formBuilder.group({
             id: [this.product.id, Validators.required],
             name: [this.product.name, Validators.required],
@@ -51,6 +47,9 @@ export class ProductEditComponent implements OnInit {
         this.productService.get(productId)
             .subscribe(data => {
                 this.editForm.setValue(data);
+            },
+                error => {
+                this.errorMessage = error;
             });
     }
 
