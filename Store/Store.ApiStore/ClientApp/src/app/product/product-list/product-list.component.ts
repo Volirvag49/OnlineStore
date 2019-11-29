@@ -20,8 +20,8 @@ export class ProductListComponent implements OnInit {
 
     requestModel: RequesthModel;
     responceModel: ResponceModel<ProductGetModel>;
-
     searchForm: FormGroup;
+    errorMessage: string;
 
     @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
@@ -75,6 +75,9 @@ export class ProductListComponent implements OnInit {
         this.productService.getPaged(this.requestModel)
             .subscribe(data => {
                 this.responceModel = data;
+            },
+            error => {
+                this.errorMessage = error;
             });
     }
 
@@ -107,6 +110,9 @@ export class ProductListComponent implements OnInit {
         this.productService.delete(productId)
             .subscribe(data => {
                 this.getPaged();
-            })
+            },
+            error => {
+                this.errorMessage = error;
+            });
     };
 }

@@ -1,5 +1,6 @@
 <div class="col-md-6 user-container">
   <h2 class="text-center">Add Product</h2>
+  <app-error-message [errors]="errorMessage"></app-error-message>
   <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="Name">Name:</label>

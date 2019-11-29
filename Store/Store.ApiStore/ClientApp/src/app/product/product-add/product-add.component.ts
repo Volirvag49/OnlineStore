@@ -19,8 +19,8 @@ export class ProductAddComponent implements OnInit {
         private productService: ProductService) { }
 
     newProduct: ProductPostModel;
-
     addForm: FormGroup;
+    errorMessage: string;
 
     ngOnInit() {
         this.newProduct = {
@@ -42,6 +42,9 @@ export class ProductAddComponent implements OnInit {
         this.productService.create(this.addForm.value)
             .subscribe(data => {
                 this.router.navigate(['product']);
+            },
+            error => {
+                this.errorMessage = error;
             });
     }
 

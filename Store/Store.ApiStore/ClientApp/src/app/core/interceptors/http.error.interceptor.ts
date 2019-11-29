@@ -9,16 +9,30 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                 retry(1),
                 catchError((error: HttpErrorResponse) => {
                     let errorMessage = '';
+
+                    console.log('Error:|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||')
+                    console.log(error);
+                    console.log('|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||')
+
                     if (error.error instanceof ErrorEvent) {
                         // client-side error
                         errorMessage = `Error: ${error.error.message}`;
                     } else {
                         // server-side error
-                        errorMessage = `Error Code: ${error.status}\nMessage:\n${error.error.error.key}`;
 
-                        console.log('Error:___________________________________________________________')
-                        console.log(error.error.error);
-                        console.log('_________________________________________________________________')
+                        let message = null;
+
+                        if (error.error.key) {
+                            message = error.error.key;
+                        }
+                        else if (typeof(error.error) == "string") {
+                            message = error.error;
+                        }
+                        else {
+                            message = error.statusText;
+                        }
+
+                        errorMessage = `Error Code: ${error.status} Message: ${message}`;
                     }
                     return throwError(errorMessage);
                 })

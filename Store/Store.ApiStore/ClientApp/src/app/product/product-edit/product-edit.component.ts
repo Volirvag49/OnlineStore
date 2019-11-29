@@ -13,8 +13,8 @@ import { ProductPutModel, ProductService } from '../../core';
 export class ProductEditComponent implements OnInit {
 
     product: ProductPutModel;
-    errorMessage: string;
     editForm: FormGroup;
+    errorMessage: string;
 
     constructor(private formBuilder: FormBuilder,
         private activatedRoute: ActivatedRoute,
@@ -61,7 +61,7 @@ export class ProductEditComponent implements OnInit {
                     this.router.navigate(['product']);
                 },
                 error => {
-                    alert(error);
+                    this.errorMessage = error;
                 });
     }
 

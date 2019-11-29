@@ -79,25 +79,21 @@ namespace Store.ApiStore.Infrastructure.Middleware
                     {
                         error = new
                         {
-                            error = new
-                            {
-                                type = exceptionTypeName,
-                                key = exceptionKey,
-                                stack = ex.StackTrace.Split("\r\n")
-                            }
+                            type = exceptionTypeName,
+                            key = exceptionKey,
+                            stack = ex.StackTrace.Split("\r\n")
+
                         };
                     }
                     else
                     {
                         error = new
                         {
-                            error = new
-                            {
-                                type = (status == HttpStatusCode.InternalServerError)
-                                    ? "InternalServerError"
-                                    : exceptionTypeName,
-                                key = exceptionKey
-                            }
+                            type = (status == HttpStatusCode.InternalServerError)
+                                ? "InternalServerError"
+                                : exceptionTypeName,
+                            key = exceptionKey
+
                         };
 
                        // Log.Error("ErrorType: " + exceptionTypeName + "\r\n" + "ErrorString: " + ex);

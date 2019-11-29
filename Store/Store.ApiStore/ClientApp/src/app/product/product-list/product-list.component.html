@@ -1,7 +1,11 @@
 <h2>Products</h2>
+<app-error-message [errors]="errorMessage"></app-error-message>
+<br />
 <br />
 <button class="btn btn-primary" style="width:100px" (click)="addNew()"> Add</button>
-<br /><br /><br />
+<br />
+<br />
+<br />
 <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
   <div class="form-group form-inline">
     <label for="Name">Name:</label>
