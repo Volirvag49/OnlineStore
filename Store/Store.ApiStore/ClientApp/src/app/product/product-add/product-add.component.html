@@ -5,20 +5,36 @@
     <div class="form-group">
       <label for="Name">Name:</label>
       <input type="text" formControlName="name" placeholder="name" name="name" class="form-control" id="name">
+      <div class="text-danger"
+           *ngIf="addForm.controls['name'].invalid && addForm.controls['name'].touched">
+        Name is invalid
+      </div>
     </div>
     <div class="form-group">
       <label for="description">Description:</label>
       <input formControlName="description" placeholder="description" name="description" class="form-control" id="description">
+      <div class="text-danger"
+           *ngIf="addForm.controls['description'].invalid && addForm.controls['description'].touched">
+          Description is invalid
+      </div>
     </div>
     <div class="form-group">
       <label for="photoUrl">Photo:</label>
       <input formControlName="photoUrl" placeholder="photoUrl" name="photoUrl" class="form-control" id="photoUrl">
+      <div class="text-danger"
+           *ngIf="addForm.controls['photoUrl'].invalid && addForm.controls['photoUrl'].touched">
+        Photo is invalid
+      </div>
     </div>
     <div class="form-group">
       <label for="lastName">Price:</label>
       <input formControlName="price" placeholder="price" name="price" type="number" class="form-control" id="price">
+      <div class="text-danger"
+           *ngIf="addForm.controls['price'].invalid && addForm.controls['price'].touched">
+        Price is invalid
+      </div>
     </div>
-    <button class="btn btn-primary">Add</button>
+    <button class="btn btn-primary" [disabled]="addForm.invalid">Add</button>
   </form>
   <button class="btn btn-secondary" (click)="goBack()">go back</button>
 </div>

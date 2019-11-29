@@ -5,20 +5,36 @@
     <div class="form-group">
       <label for="Name">Name:</label>
       <input type="text" formControlName="name" placeholder="name" name="name" class="form-control" id="name">
+      <div class="text-danger"
+           *ngIf="editForm.controls['name'].invalid && editForm.controls['name'].touched">
+        Name is invalid
+      </div>
     </div>
     <div class="form-group">
       <label for="description">Description:</label>
       <input formControlName="description" placeholder="description" name="description" class="form-control" id="description">
+      <div class="text-danger"
+           *ngIf="editForm.controls['description'].invalid && editForm.controls['description'].touched">
+        Description is invalid
+      </div>
     </div>
     <div class="form-group">
       <label for="photoUrl">Photo:</label>
       <input formControlName="photoUrl" placeholder="photoUrl" name="photoUrl" class="form-control" id="photoUrl">
+      <div class="text-danger"
+           *ngIf="editForm.controls['photoUrl'].invalid && editForm.controls['photoUrl'].touched">
+        Photo is invalid
+      </div>
     </div>
     <div class="form-group">
       <label for="lastName">Price:</label>
       <input formControlName="price" placeholder="price" name="price" type="number" class="form-control" id="price">
+      <div class="text-danger"
+           *ngIf="editForm.controls['price'].invalid && editForm.controls['price'].touched">
+        Price is invalid
+      </div>
     </div>
-    <button class="btn btn-primary">Update</button>
+    <button class="btn btn-primary" [disabled]="editForm.invalid">Update</button>
   </form>
   <button class="btn btn-secondary" (click)="goBack()">go back</button>
 </div>
