@@ -2,6 +2,9 @@
   <h2 class="text-center">Update Product</h2>
   <app-error-message [errors]="errorMessage"></app-error-message>
   <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+    <div>
+      <app-file-upload formControlName="image"></app-file-upload>
+    </div>
     <div class="form-group">
       <label for="Name">Name:</label>
       <input type="text" formControlName="name" placeholder="name" name="name" class="form-control" id="name">
@@ -16,14 +19,6 @@
       <div class="text-danger"
            *ngIf="editForm.controls['description'].invalid && editForm.controls['description'].touched">
         Description is invalid
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="photoUrl">Photo:</label>
-      <input formControlName="photoUrl" placeholder="photoUrl" name="photoUrl" class="form-control" id="photoUrl">
-      <div class="text-danger"
-           *ngIf="editForm.controls['photoUrl'].invalid && editForm.controls['photoUrl'].touched">
-        Photo is invalid
       </div>
     </div>
     <div class="form-group">

@@ -1,4 +1,5 @@
 ﻿using System;
+using Store.ApiStore.VewModels.Image;
 
 namespace Store.ApiStore.VewModels.Product
 {
@@ -7,7 +8,8 @@ namespace Store.ApiStore.VewModels.Product
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string PhotoUrl { get; set; }
         public decimal Price { get; set; }
+
+        public ImageGetModel Image { get; set; }
     }
 }

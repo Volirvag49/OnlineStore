@@ -18,5 +18,7 @@ namespace Store.ApiStore.Services.Base
         Task Update(ProductPutModel putModel);
         Task Delete(Guid id);
         Task Restore(Guid id);
+
+        Task CreateImageFromDb(string fileUrl);
     }
 }

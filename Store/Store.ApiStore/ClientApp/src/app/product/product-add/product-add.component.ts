@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 
 import {
-    ProductPostModel, ProductService
+    ProductPostModel, FileToUploadPostModel, ProductService
 } from '../../core';
 
 @Component({
@@ -18,28 +18,37 @@ export class ProductAddComponent implements OnInit {
         private location: Location,
         private productService: ProductService) { }
 
-    newProduct: ProductPostModel;
+    initProduct: ProductPostModel;
     addForm: FormGroup;
+    imageURL: string;
     errorMessage: string;
 
+    theFile: any = null;
+    messages: string[] = [];
+
     ngOnInit() {
-        this.newProduct = {
-            name: null,
-            description: null,
-            photoUrl: null,
-            price: null
+        this.initProduct = {
+            name: "asdasd",
+            description: "asdasd",
+            image: null,
+            price: 313
         }
 
         this.addForm = this.formBuilder.group({
-            name: [this.newProduct.name, Validators.required],
-            description: [this.newProduct.description, Validators.required],
-            photoUrl: [this.newProduct.photoUrl, Validators.required],
-            price: [this.newProduct.price, Validators.required]
+            name: [this.initProduct.name, Validators.required],
+            description: [this.initProduct.description, Validators.required],
+            image: [null],
+            price: [this.initProduct.price, Validators.required]
         });
     }
 
     onSubmit() {
-        this.productService.create(this.addForm.value)
+        let createdProduct = (this.addForm.value as ProductPostModel);
+
+        createdProduct.image = this.getFilePostModel(createdProduct.image);
+        console.log('createdProduct:');
+        console.log(createdProduct);
+        this.productService.create(createdProduct)
             .subscribe(data => {
                 this.router.navigate(['product']);
             },
@@ -47,9 +56,24 @@ export class ProductAddComponent implements OnInit {
                 this.errorMessage = error;
             });
     }
-
+  
     goBack() {
         this.location.back();
+    }
+
+    getFilePostModel(file: any): FileToUploadPostModel {
+        if (file == null)
+            return null;
+
+        let fileToUpload = new FileToUploadPostModel;
+        console.log(file);
+        fileToUpload.fileName = file.name;
+        fileToUpload.fileSize = file.size;
+        fileToUpload.fileType = file.type;
+        fileToUpload.lastModified = file.lastModifiedDate;
+        fileToUpload.fileAsBase64 = file.fileAsBase64;
+
+        return fileToUpload;
     }
 
 }

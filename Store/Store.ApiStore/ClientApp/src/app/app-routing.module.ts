@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
     {
-        path: 'product',
+        path: 'products',
         loadChildren: './product/product.module#ProductModule'
     }
 ];

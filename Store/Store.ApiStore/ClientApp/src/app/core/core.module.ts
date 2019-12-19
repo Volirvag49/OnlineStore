@@ -6,7 +6,7 @@ import { HttpErrorInterceptor } from './interceptors/http.error.interceptor';
 
 import {
     ApiService,
-    ProductService
+    ProductService,
 } from './services';
 
 @NgModule({
@@ -18,7 +18,7 @@ import {
         { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
         ApiService,
-        ProductService
+        ProductService,
     ],
 })
 export class CoreModule { }

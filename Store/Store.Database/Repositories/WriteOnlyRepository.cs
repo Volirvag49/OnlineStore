@@ -23,7 +23,7 @@ namespace Store.Database.Repositories
         public async Task UpdateTracked<TEntity>(TEntity entity)
              where TEntity : class, IEntity
         {
-            await UpdateTracked(entity);
+            await UpdateTracked(entity.SingleAsEnumerable());
         }
 
         public async Task UpdateTracked<TEntity>(IEnumerable<TEntity> entities)
@@ -91,8 +91,8 @@ namespace Store.Database.Repositories
                 ChangeEntity(entity, propertiesToUpdate);
 
                 await _context.SaveChangesAsync();
+                // _context.Entry(entity).State = EntityState.Detached;
 
-                _context.Entry(entity).State = EntityState.Detached; // looks like a bad practice
             }
             catch (Exception ex)
             {
@@ -117,8 +117,8 @@ namespace Store.Database.Repositories
 
                 await _context.SaveChangesAsync();
 
-                foreach (var entity in entities)
-                    _context.Entry(entity).State = EntityState.Detached; // looks like a bad practice
+                //foreach (var entity in entities)
+                //    _context.Entry(entity).State = EntityState.Detached;
             }
             catch (Exception ex)
             {

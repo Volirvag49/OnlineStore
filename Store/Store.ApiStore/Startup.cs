@@ -19,6 +19,7 @@ using Store.Database.Repositories.Base;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using System;
 using System.IO;
+using Microsoft.Extensions.FileProviders;
 
 namespace Store.ApiStore
 {
@@ -82,6 +83,8 @@ namespace Store.ApiStore
             // ===== Add Services ========
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IFileService, FileService>();
+            
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -94,6 +97,13 @@ namespace Store.ApiStore
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DefaultContext context)
         {
             app.EnableGlobalExceptions();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "Images")),
+                RequestPath = "/Images"
+            });
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();

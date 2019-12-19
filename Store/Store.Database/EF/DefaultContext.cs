@@ -31,6 +31,11 @@ namespace Store.Database.EF
                 .HasOne(q => q.Cart)
                 .WithOne(q => q.Customer);
 
+            //builder.Entity<Product>()
+            //    .HasOne(q => q.Image)
+            //    .WithOne(q => q.Product)
+            //    .HasForeignKey<Product>(q => q.Id);
+
             builder.Entity<Cart>()
                 .HasMany(q => q.CartItems)
                 .WithOne(q => q.Cart);

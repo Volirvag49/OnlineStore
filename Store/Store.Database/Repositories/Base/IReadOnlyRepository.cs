@@ -1,4 +1,5 @@
-﻿using Store.Database.Entities.Base;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using Store.Database.Entities.Base;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -15,7 +16,7 @@ namespace Store.Database.Repositories.Base
             bool? isDeleted = null,
             bool isIgnoreQueryFilter = false,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = null,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             Func<IQueryable<TEntity>, IQueryable<TEntity>> queryableFilter = null)
             where TEntity : class, IEntity;
 
@@ -24,7 +25,7 @@ namespace Store.Database.Repositories.Base
             bool? isDeleted = null,
             bool isIgnoreQueryFilter = false,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = null)
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
             where TEntity : class, IEntity;
 
         Task<TEntity[]> GetAllAsync<TEntity>(
@@ -32,7 +33,7 @@ namespace Store.Database.Repositories.Base
            bool? isDeleted = null,
            bool isIgnoreQueryFilter = false,
            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-           string includeProperties = null,
+           Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
            Func<IQueryable<TEntity>, IQueryable<TEntity>> queryableFilter = null)
            where TEntity : class, IEntity;
 
@@ -49,7 +50,7 @@ namespace Store.Database.Repositories.Base
             bool? isDeleted = null,
             bool isIgnoreQueryFilter = false,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = null,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             Func<IQueryable<TEntity>, IQueryable<TEntity>> queryableFilter = null,
             bool shouldUseOrderBy = true)
             where TEntity : class, IEntity;

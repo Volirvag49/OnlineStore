@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -42,6 +43,12 @@ namespace Store.ApiStore.Infrastructure.Middleware
                             }
                             break;
                         case NotFoundException _:
+                            {
+                                exceptionKey = ex.Message;
+                                status = HttpStatusCode.NotFound;
+                            }
+                            break;
+                        case FileNotFoundException _:
                             {
                                 exceptionKey = ex.Message;
                                 status = HttpStatusCode.NotFound;
@@ -96,11 +103,11 @@ namespace Store.ApiStore.Infrastructure.Middleware
 
                         };
 
-                       // Log.Error("ErrorType: " + exceptionTypeName + "\r\n" + "ErrorString: " + ex);
+                        // Log.Error("ErrorType: " + exceptionTypeName + "\r\n" + "ErrorString: " + ex);
                     }
 
                     var result = JsonConvert.SerializeObject(error);
-                   // Log.Error(result);
+                    // Log.Error(result);
 
                     await response.WriteAsync(result);
                 }

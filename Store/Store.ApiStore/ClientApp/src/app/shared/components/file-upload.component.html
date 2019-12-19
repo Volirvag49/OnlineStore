@@ -1,0 +1,15 @@
+<div>
+  <div class="imagePreview" *ngIf="imagePreview && imagePreview !== ''">
+    <img class="img-fluid" [src]="imagePreview">
+  </div>
+
+  <input class="file-input" type="file">
+  <div *ngIf="messages.length > 0">
+    <span *ngFor="let msg of messages">
+      {{msg}}
+      <br />
+    </span>
+  </div>
+</div>
+
+<!--<app-progress [progress]="progress"></app-progress>-->

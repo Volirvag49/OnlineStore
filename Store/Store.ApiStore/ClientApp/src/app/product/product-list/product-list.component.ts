@@ -47,6 +47,10 @@ export class ProductListComponent implements OnInit {
         this.getPaged();
     }
 
+    getImageBaseUrl(imageUrl: string): string {
+        return this.productService.getImageBaseURl(imageUrl);
+    }
+
     onSearch() {
         this.requestModel.searchString = this.searchForm.value.searchString;
         this.requestModel.searchSelection = this.searchForm.value.searchSelection;
@@ -93,11 +97,11 @@ export class ProductListComponent implements OnInit {
     }
 
     addNew(): void {
-        this.router.navigate(['product/add']);
+        this.router.navigate(['products/add']);
     };
 
     update(productId: string): void {
-        this.router.navigate(['product/' + productId +'/edit']);
+        this.router.navigate(['products/' + productId +'/edit']);
     };
 
     delete(productId: string): void {

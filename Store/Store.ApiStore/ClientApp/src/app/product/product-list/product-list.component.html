@@ -22,6 +22,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
+        <th scope="col" Image>Image</th>
         <th scope="col" sortable="Name" (sort)="onSort($event)">Name</th>
         <th scope="col" sortable="Price" (sort)="onSort($event)">Price</th>
         <th scope="col" sortable="Description" (sort)="onSort($event)">Description</th>
@@ -30,6 +31,11 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of responceModel?.results">
+        <div class="imagePreview" *ngIf="item?.image?.fileUrl && item?.image?.fileUrl !== ''">
+          <img class="img-fluid" [src]="getImageBaseUrl(item.image.fileUrl)">
+        </div>
+        <td>
+        </td>
         <td>{{item.name}}</td>
         <td>{{item.price}}</td>
         <td>{{item.description}}</td>

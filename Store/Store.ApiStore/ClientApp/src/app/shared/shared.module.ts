@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbdSortableHeader } from './directives';
-import { ErrorMessageComponent } from './error.message.component';
+import { ErrorMessageComponent, FileUploadComponent } from './components';
 
 @NgModule({
     imports: [
@@ -16,6 +16,7 @@ import { ErrorMessageComponent } from './error.message.component';
     ],
     declarations: [
         ErrorMessageComponent,
+        FileUploadComponent,
         NgbdSortableHeader
 
     ],
@@ -26,6 +27,7 @@ import { ErrorMessageComponent } from './error.message.component';
         HttpClientModule,
         RouterModule,
         ErrorMessageComponent,
+        FileUploadComponent,
         NgbdSortableHeader
 
     ]

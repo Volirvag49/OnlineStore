@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Store.ApiStore.Infrastructure.Exceptions;
 using Store.ApiStore.Services.Base;
 using Store.ApiStore.VewModels;
+using Store.ApiStore.VewModels.Image;
 using Store.ApiStore.VewModels.Product;
 using Store.Database.Entities;
 using Store.Database.Repositories.Base;
@@ -19,13 +20,16 @@ namespace Store.ApiStore.Services
 
         private readonly IReadOnlyRepository _readOnly;
         private readonly IWriteOnlyRepository _writeOnly;
+        private readonly IFileService _fileService;
         private readonly IMapper _mapper;
         public ProductService(IReadOnlyRepository readOnly,
             IWriteOnlyRepository writeOnly,
+            IFileService fileService,
             IMapper mapper)
         {
             _readOnly = readOnly;
             _writeOnly = writeOnly;
+            _fileService = fileService;
             _mapper = mapper;
         }
         public async Task<ProductGetModel> GetById(Guid id)
@@ -33,7 +37,10 @@ namespace Store.ApiStore.Services
             if (id == Guid.Empty)
                 throw new InvalidArgumentException($"Id is not a valid {nameof(Guid)}!");
 
-            var result = await _readOnly.GetFirstAsync<Product>(q => q.Id == id);
+            var result = await _readOnly
+                .GetQueryable<Product>(q => q.Id == id, 
+                    include: sourse => sourse.Include(q => q.Image))
+                .FirstOrDefaultAsync();
 
             if (result == null)
                 throw new NotFoundException($"Can't find a {typeof(Product).Name} with ID = {id}");
@@ -99,10 +106,10 @@ namespace Store.ApiStore.Services
                     break;
             }
 
-
             var result = await _readOnly.GetPagedAsync(
                 page: sortSearchModel.CurrentPage, pageSize: sortSearchModel.PageSize,
-                filter: filter, orderBy: orderBy);
+                filter: filter, orderBy: orderBy, 
+                include: source => source.Include(a => a.Image));
 
             return _mapper.Map<ResponceModel<ProductGetModel>>(result);
         }
@@ -112,7 +119,12 @@ namespace Store.ApiStore.Services
             if (postModel == null)
                 throw new InvalidArgumentException($"{typeof(ProductPostModel).Name} was null!");
 
+            //await UploadImage(postModel.Image);
+
             var entity = _mapper.Map<Product>(postModel);
+
+            await _fileService.UploadImage(entity.Image);
+
             await _writeOnly.SaveChangesAsync(entity);
 
             return entity.Id;
@@ -129,7 +141,13 @@ namespace Store.ApiStore.Services
 
             var entity = _mapper.Map<Product>(putModel);
 
+            await _fileService.UploadImage(entity.Image);
+
             await _writeOnly.SaveChangesAsync(entity);
+
+            if (entity.Image != null)
+                await _writeOnly.SaveChangesAsync(entity.Image);
+
         }
 
         public async Task Delete(Guid id)
@@ -174,6 +192,16 @@ namespace Store.ApiStore.Services
                 throw new LogicalException($"{typeof(Product).Name} with ID = {id} is not removed!");
 
             await _writeOnly.RestoreByIdAsync<Product>(id);
+        }
+
+        public async Task CreateImageFromDb(string fileUrl)
+        {
+            var image = await _readOnly.GetFirstAsync<Image>(q => q.FileUrl == fileUrl);
+
+            if (image == null)
+                throw new NotFoundException($"Can't find a {typeof(Image)} with FileUrl = {fileUrl}!");
+
+            await _fileService.UploadImage(image);
         }
     }
 }

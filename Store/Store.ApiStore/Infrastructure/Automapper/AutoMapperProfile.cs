@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Store.ApiStore.VewModels;
 using Store.ApiStore.VewModels.Customer;
+using Store.ApiStore.VewModels.Image;
 using Store.ApiStore.VewModels.Product;
 using Store.Database.Entities;
 using Store.Database.Entities.Base;
@@ -13,8 +14,8 @@ namespace Store.ApiStore.Infrastructure.Automapper
         {
             // pagination
             CreateMap<PagedResult<Product>, ResponceModel<ProductGetModel>>()
-                .ForMember(x => x.Results,
-                x => x.MapFrom(m => m.Results));
+                .ForMember(d => d.Results,
+                m => m.MapFrom(s => s.Results));
 
             // Customer
             CreateMap<Customer, CustomerGetModel>();
@@ -24,7 +25,17 @@ namespace Store.ApiStore.Infrastructure.Automapper
             // Product
             CreateMap<Product, ProductGetModel>();
             CreateMap<ProductPostModel, Product>();
-            CreateMap<ProductPutModel, Product>();
+            CreateMap<ProductPutModel, Product>()
+                .ForMember(d => d.Image,
+                m => m.MapFrom(s => s.Image))
+                .ForPath(d => d.Image.ProductId,
+                m => m.MapFrom(s => s.Id));
+
+
+            // Image             
+            CreateMap<Image, ImageGetModel>();
+            CreateMap<ImagePostModel, Image>();
+            CreateMap<ImagePutModel, Image>();
         }
     }
 }

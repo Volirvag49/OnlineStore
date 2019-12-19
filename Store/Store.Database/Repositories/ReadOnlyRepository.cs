@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Store.Database.Entities.Base;
 using Store.Database.Extensions;
 using Store.Database.Repositories.Base;
@@ -26,10 +27,10 @@ namespace Store.Database.Repositories
             bool? isDeleted = null,
             bool isIgnoreQueryFilter = false,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = null)
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
             where TEntity : class, IEntity
         {
-            var entity = await GetQueryable(filter, isDeleted, isIgnoreQueryFilter, orderBy, includeProperties)
+            var entity = await GetQueryable(filter, isDeleted, isIgnoreQueryFilter, orderBy, include)
                 .FirstOrDefaultAsync(_cancellationToken);
 
             if (entity == null)
@@ -44,12 +45,12 @@ namespace Store.Database.Repositories
             bool? isDeleted = null,
             bool isIgnoreQueryFilter = false,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = null,
+                        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             Func<IQueryable<TEntity>, IQueryable<TEntity>> queryableFilter = null)
             where TEntity : class, IEntity
         {
             IQueryable<TEntity> query = GetQueryable(filter, isDeleted, isIgnoreQueryFilter, orderBy,
-                includeProperties, queryableFilter: queryableFilter);
+                include, queryableFilter: queryableFilter);
 
             return await query.GetPagedAsync(page, pageSize, _cancellationToken);
         }
@@ -59,12 +60,12 @@ namespace Store.Database.Repositories
             bool? isDeleted = null,
             bool isIgnoreQueryFilter = false,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = null,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             Func<IQueryable<TEntity>, IQueryable<TEntity>> queryableFilter = null)
             where TEntity : class, IEntity
         {
             IQueryable<TEntity> query = GetQueryable(filter, isDeleted, isIgnoreQueryFilter, orderBy,
-                includeProperties, queryableFilter: queryableFilter);
+                include, queryableFilter: queryableFilter);
 
             return await query.ToArrayAsync(_cancellationToken);
         }
@@ -75,7 +76,6 @@ namespace Store.Database.Repositories
             where TEntity : class, IEntity
         {
             var query = GetQueryable(filter, isDeleted);
-
 
             return await query.CountAsync(_cancellationToken);
         }
@@ -98,7 +98,7 @@ namespace Store.Database.Repositories
             bool? isDeleted = null,
             bool isIgnoreQueryFilter = false,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = null,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             Func<IQueryable<TEntity>, IQueryable<TEntity>> queryableFilter = null,
             bool shouldUseOrderBy = true)
             where TEntity : class, IEntity
@@ -106,14 +106,9 @@ namespace Store.Database.Repositories
 
             IQueryable<TEntity> query = _context.Set<TEntity>();
 
-            if (!string.IsNullOrEmpty(includeProperties))
-            {
-                includeProperties = includeProperties.Replace(" ", "");
 
-                foreach (var includeProperty in includeProperties.Split(new char[] { ',' },
-                    StringSplitOptions.RemoveEmptyEntries))
-                    query = query.Include(includeProperty);
-            }
+            if (include != null)
+                query = include(query);
 
             if (filter != null)
                 query = query.Where(filter);
